@@ -19,12 +19,17 @@ public class Main {
         graph.addEdge(new Edge(b,c,1));
         graph.addEdge(new Edge(a,d,1));
         graph.addEdge(new Edge(c,x, 5));
-        graph.addEdge(new Edge(d,c,20));
+        graph.addEdge(new Edge(d,x,1));
 
 
-        Dijkstra dijkstra = new Dijkstra(graph, a, x);
+        Dijkstra dijkstra = new Dijkstra();
+        List<Vertex> path = dijkstra.shortestPath(graph, a, b);
 
-        System.out.println(dijkstra.kuerzesterWeg());
+        path.toFirst();
+        while (path.hasAccess()) {
+            System.out.println(path.getContent().getID());
+            path.next();
+        }
 
 
     }
