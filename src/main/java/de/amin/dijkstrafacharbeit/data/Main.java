@@ -22,8 +22,9 @@ public class Main {
         graph.addEdge(new Edge(d,x,1));
 
 
+
         Dijkstra dijkstra = new Dijkstra();
-        List<Vertex> path = dijkstra.shortestPath(graph, a, b);
+        List<Vertex> path = dijkstra.shortestPath(graph, a, x);
 
         path.toFirst();
         while (path.hasAccess()) {
