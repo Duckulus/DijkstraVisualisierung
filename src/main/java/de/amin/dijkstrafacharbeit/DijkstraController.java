@@ -1,7 +1,9 @@
 package de.amin.dijkstrafacharbeit;
 
 import de.amin.dijkstrafacharbeit.data.*;
+import de.amin.dijkstrafacharbeit.data.List;
 import de.amin.dijkstrafacharbeit.gui.EdgeLine;
+import de.amin.dijkstrafacharbeit.gui.InputField;
 import de.amin.dijkstrafacharbeit.gui.VertexPane;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -21,10 +23,7 @@ import javafx.scene.shape.Line;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class DijkstraController {
 
@@ -44,35 +43,23 @@ public class DijkstraController {
         dialog.setTitle("Add an Edge");
         Label error = new Label();
 
-        Label label1 = new Label("Vertex 1:");
-        TextField from = new TextField();
-        HBox hb = new HBox();
-        hb.getChildren().addAll(label1, from);
-        hb.setSpacing(10);
+        InputField vertex1 = new InputField("Vertex 1:");
 
-        Label label2 = new Label("Vertex 2:");
-        TextField to = new TextField();
-        HBox hb2 = new HBox();
-        hb2.getChildren().addAll(label2, to);
-        hb2.setSpacing(10);
+        InputField vertex2 = new InputField("Vertex 2:");
 
-        Label label3 = new Label("Weight: ");
-        TextField weightField = new TextField();
-        HBox hb3 = new HBox();
-        hb3.getChildren().addAll(label3, weightField);
-        hb3.setSpacing(10);
+        InputField weightField = new InputField("Weight: ");
 
 
         Button button = new Button();
         button.setText("add");
         button.setOnMouseClicked(event -> {
-            if (!vertices.containsKey(from.getText())) { //Validate startpoint exists
-                error.setText("Vertex " + from.getText() + " Not found");
+            if (!vertices.containsKey(vertex1.getText())) { //Validate startpoint exists
+                error.setText("Vertex " + vertex2.getText() + " Not found");
                 return;
             }
 
-            if (!vertices.containsKey(to.getText())) { //Validate goal exists
-                error.setText("Vertex " + to.getText() + " Not found");
+            if (!vertices.containsKey(vertex2.getText())) { //Validate goal exists
+                error.setText("Vertex " + vertex2.getText() + " Not found");
                 return;
             }
 
@@ -89,8 +76,8 @@ public class DijkstraController {
                 return;
             }
 
-            VertexPane start = vertices.get(from.getText());
-            VertexPane end = vertices.get(to.getText());
+            VertexPane start = vertices.get(vertex1.getText());
+            VertexPane end = vertices.get(vertex2.getText());
 
             if (start == end) {
                 error.setText("Vertex1 and Vertex2 cannot be the same");
@@ -98,8 +85,9 @@ public class DijkstraController {
             }
 
             for (EdgeLine edge : edges) {
-                if(edge.getTo()==start && edge.getFrom()==end) {
-                    error.setText("A connection between these Vertices already exists!");
+                if(Arrays.stream(edge.getEdge().getVertices()).anyMatch(vertex -> vertex==start.getVertex()) &&
+                        Arrays.stream(edge.getEdge().getVertices()).anyMatch(vertex -> vertex==end.getVertex())) {
+                    error.setText("Connection already exists.");
                     return;
                 }
             }
@@ -112,7 +100,7 @@ public class DijkstraController {
             edges.add(line);
         });
 
-        dialogVbox.getChildren().addAll(hb, hb2, hb3, error, button);
+        dialogVbox.getChildren().addAll(vertex1, vertex2, weightField, error, button);
         Scene dialogScene = new Scene(dialogVbox, 300, 250);
         dialog.setScene(dialogScene);
         dialog.show();
@@ -130,40 +118,30 @@ public class DijkstraController {
 
         Label error = new Label();
 
-        Label inputLabel = new Label("Vertex Name: ");
-        TextField field = new TextField();
-        field.setTextFormatter(new TextFormatter<>(change -> {
-            if (change.getText().equals(" ")) {
-                change.setText("");
-            }
-            return change;
-        }));
-        HBox hb = new HBox();
-        hb.getChildren().addAll(inputLabel, field);
-        hb.setSpacing(10);
+        InputField inputField = new InputField("Vertex Name: ");
 
         Button button = new Button();
         button.setText("add");
         button.setOnMouseClicked(event -> {
             for (String dot : vertices.keySet()) {
-                if (dot.equalsIgnoreCase(field.getText())) {
+                if (dot.equalsIgnoreCase(inputField.getText())) {
                     error.setText("Vertex with this name already exists");
                     return;
                 }
             }
 
-            if(field.getText().isEmpty()) {
+            if(inputField.getText().isEmpty()) {
                 error.setText("Please Provide a valid name.");
                 return;
             }
 
-            String name = field.getText().replaceAll(" ", "").replaceAll("\n", "");
+            String name = inputField.getText().replaceAll(" ", "").replaceAll("\n", "");
             VertexPane vertex = new VertexPane(name); //Remove Spaces and Line Breaks
             vertices.put(name, vertex);
             pane.getChildren().add(vertex);
             dialog.hide();
         });
-        dialogVbox.getChildren().addAll(hb, button, error);
+        dialogVbox.getChildren().addAll(inputField, button, error);
 
         Scene dialogScene = new Scene(dialogVbox, 300, 200);
         dialog.setScene(dialogScene);
@@ -206,6 +184,7 @@ public class DijkstraController {
         Button button = new Button("Calculate Path");
         Label result = new Label();
         Label error = new Label();
+        Label cost = new Label("Total Cost: ");
         button.setOnAction(event -> {
             Vertex origin = startBox.getSelectionModel().getSelectedItem();
             Vertex goal = goalBox.getSelectionModel().getSelectedItem();
@@ -225,18 +204,18 @@ public class DijkstraController {
 
             Dijkstra dijkstra = new Dijkstra();
             List<Vertex> path = dijkstra.shortestPath(graph,origin,goal);
-            updateColors(graph, origin,goal,path);
+            cost.setText("Total Cost: " + updateColors(graph, origin,goal,path));
             result.setText(dijkstra.toPathString(path));
         });
 
-        dialogVbox.getChildren().addAll(startSelector, goalSelector, button, result, error);
+        dialogVbox.getChildren().addAll(startSelector, goalSelector, button, result, cost, error);
 
-        Scene dialogScene = new Scene(dialogVbox, 300, 200);
+        Scene dialogScene = new Scene(dialogVbox, 300, 300);
         dialog.setScene(dialogScene);
         dialog.show();
     }
 
-    private void updateColors(Graph graph, Vertex start, Vertex end, List<Vertex> path) {
+    private int updateColors(Graph graph, Vertex start, Vertex end, List<Vertex> path) {
         //reset colors to default
         vertices.forEach((s, vertexPane) -> {
             vertexPane.setColor("cyan");
@@ -255,13 +234,14 @@ public class DijkstraController {
                 vertexPane.setColor("#e36f09");
             }
         });
-
+        int cost = 0;
         path.toFirst();
         while (path.hasAccess()) {
             Vertex temp = path.getContent();
             path.next();
             if(path.hasAccess()) {
                 Edge edge = graph.getEdge(temp, path.getContent());
+                cost+=edge.getWeight();
                 edges.forEach(edgeLine -> {
                     if(edgeLine.getEdge() == edge) {
                         edgeLine.setStroke(Color.RED);
@@ -269,6 +249,7 @@ public class DijkstraController {
                 });
             }
         }
+        return cost;
     }
 
 }
