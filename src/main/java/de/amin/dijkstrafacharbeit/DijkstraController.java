@@ -36,11 +36,12 @@ public class DijkstraController {
 
     public void onEdgeAdd(ActionEvent actionEvent) {
         final Stage dialog = new Stage();
-        dialog.setHeight(500);
+        dialog.setHeight(400);
+        dialog.setResizable(false);
         dialog.initModality(Modality.APPLICATION_MODAL);
         dialog.initOwner(pane.getScene().getWindow());
         VBox dialogVbox = new VBox(30);
-        dialog.setTitle("Add a Vertex");
+        dialog.setTitle("Add an Edge");
         Label error = new Label();
 
         Label label1 = new Label("Vertex 1:");
@@ -107,31 +108,34 @@ public class DijkstraController {
         final Stage dialog = new Stage();
         dialog.initModality(Modality.APPLICATION_MODAL);
         dialog.initOwner(pane.getScene().getWindow());
+        dialog.setResizable(false);
         VBox dialogVbox = new VBox(20);
         dialog.setTitle("Add a Vertex");
 
-        TextArea textArea = new TextArea();
-        textArea.setMaxSize(1000,30);
-        textArea.setText("Example Vertex");
+        Label error = new Label();
+
+        Label inputLabel = new Label("Vertex Name: ");
+        TextField field = new TextField();
+        HBox hb = new HBox();
+        hb.getChildren().addAll(inputLabel,field);
+        hb.setSpacing(10);
 
         Button button = new Button();
         button.setText("add");
         button.setOnMouseClicked(event -> {
             for (String dot : vertices.keySet()) {
-                if(dot.equalsIgnoreCase(textArea.getText())) {
-                    Label label = new Label("Vertex with this name already exists");
-                    dialogVbox.getChildren().add(label);
+                if(dot.equalsIgnoreCase(field.getText())) {
+                    error.setText("Vertex with this name already exists");
                     return;
                 }
             }
 
-            VertexPane vertex = new VertexPane(textArea.getText());
-            vertices.put(textArea.getText(), vertex);
+            VertexPane vertex = new VertexPane(field.getText().replaceAll(" ", "").replaceAll("\n", "")); //Remove Spaces and Line Breaks
+            vertices.put(field.getText(), vertex);
             pane.getChildren().add(vertex);
             dialog.hide();
         });
-        dialogVbox.getChildren().add(textArea);
-        dialogVbox.getChildren().add(button);
+        dialogVbox.getChildren().addAll(hb, button, error);
 
         Scene dialogScene = new Scene(dialogVbox, 300, 200);
         dialog.setScene(dialogScene);
