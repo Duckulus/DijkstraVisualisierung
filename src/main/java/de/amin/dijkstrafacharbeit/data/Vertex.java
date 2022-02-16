@@ -49,5 +49,9 @@ public class Vertex{
   public boolean isMarked(){
     return mark;
   }
-  
+
+  @Override
+  public String toString() {
+    return id;
+  }
 }

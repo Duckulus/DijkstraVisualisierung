@@ -1,6 +1,7 @@
 package de.amin.dijkstrafacharbeit.gui;
 
 import de.amin.dijkstrafacharbeit.DijkstraController;
+import de.amin.dijkstrafacharbeit.data.Vertex;
 import javafx.event.EventHandler;
 import javafx.geometry.Bounds;
 import javafx.scene.control.Label;
@@ -10,18 +11,21 @@ import javafx.scene.shape.Circle;
 
 public class VertexPane extends StackPane {
 
+    private Vertex vertex;
+    private Circle dot;
     /**
      * Credit https://stackoverflow.com/questions/53366602/creating-directed-edges-javafx
      */
     public VertexPane(String text) {
         super();
-        double radius = 50;
+        this.vertex = new Vertex(text);
+        double radius = 30;
         double paneSize = 2 * radius;
         StackPane dotPane = this;
-        Circle dot = new Circle();
+        dot = new Circle();
         dot.setRadius(radius);
-        dot.setStyle("-fx-fill:yellow;-fx-stroke-width:2px;-fx-stroke:black;");
-
+        dot.setStyle("-fx-fill:cyan;-fx-stroke-width:2px;-fx-stroke:black;");
+        toFront();
         Label txt = new Label(text);
         txt.setStyle("-fx-font-size:18px;-fx-font-weight:bold;");
         dotPane.getChildren().addAll(dot, txt);
@@ -75,4 +79,11 @@ public class VertexPane extends StackPane {
 
     }
 
+    public Vertex getVertex() {
+        return vertex;
+    }
+
+    public void setColor(String color) {
+        dot.setStyle("-fx-fill:" + color +";-fx-stroke-width:2px;-fx-stroke:black;");
+    }
 }

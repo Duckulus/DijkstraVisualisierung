@@ -11,12 +11,15 @@ public class EdgeLine extends Line {
     private VertexPane from;
     private VertexPane to;
     private double weight;
+    private Edge edge;
 
     public EdgeLine(VertexPane startDot, VertexPane endDot, Pane pane,Double weight) {
         this.from = startDot;
         this.to = endDot;
         this.weight = weight;
+        this.edge = new Edge(from.getVertex(), to.getVertex(), weight);
 
+        toFront();
         Line line = this;
         Label label = new Label();
         label.setText(String.valueOf(weight));
@@ -24,7 +27,7 @@ public class EdgeLine extends Line {
         pane.getChildren().add(label);
         label.layoutXProperty().bind(line.endXProperty().subtract(line.endXProperty().subtract(line.startXProperty()).divide(2)));
         label.layoutYProperty().bind(line.endYProperty().subtract(line.endYProperty().subtract(line.startYProperty()).divide(2)));
-        line.setStroke(Color.BLUE);
+        line.setStroke(Color.BLACK);
         line.setStrokeWidth(2);
         line.startXProperty().bind(startDot.layoutXProperty().add(startDot.translateXProperty()).add(startDot.widthProperty().divide(2)));
         line.startYProperty().bind(startDot.layoutYProperty().add(startDot.translateYProperty()).add(startDot.heightProperty().divide(2)));
@@ -42,5 +45,9 @@ public class EdgeLine extends Line {
 
     public double getWeight() {
         return weight;
+    }
+
+    public Edge getEdge() {
+        return edge;
     }
 }

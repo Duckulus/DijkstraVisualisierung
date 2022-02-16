@@ -65,6 +65,10 @@ public class Dijkstra {
         while (!unvisited.isEmpty()) { //Abbruchbedingung: Alle felder wurden besucht
             Vertex u = getSmallest(); //Kleinster unbesuchter Knoten als ausgangspunkt
 
+            if(u==null) {
+                return;
+            }
+
             visit(u); //Besuchter knoten wird als besucht markiert
 
             List<Vertex> neighbours = getNeighbours(graph, u);
@@ -183,6 +187,19 @@ public class Dijkstra {
             distance.put(v, alternative);
             previous.put(v, u);
         }
+    }
+
+    public String toPathString(List<Vertex> path) {
+        path.toFirst();
+        String result = "";
+        while (path.hasAccess()) {
+            result+=path.getContent().getID();
+            path.next();
+            if(path.hasAccess()) {
+                result += "  -->  ";
+            }
+        }
+        return result;
     }
 
 }
