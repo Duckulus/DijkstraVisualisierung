@@ -1,21 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.*?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.Pane?>
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0"
-            prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="de.amin.dijkstrafacharbeit.DijkstraController" stylesheets="style.css">
+<?import javafx.scene.layout.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="style.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.amin.dijkstrafacharbeit.DijkstraController">
     <center>
-        <Pane fx:id="pane" prefHeight="55.0" prefWidth="600.0" BorderPane.alignment="CENTER"/>
+        <Pane fx:id="pane" prefHeight="55.0" prefWidth="600.0" BorderPane.alignment="CENTER" />
     </center>
     <top>
-        <ButtonBar prefHeight="52.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+        <ButtonBar nodeOrientation="LEFT_TO_RIGHT" prefHeight="52.0" prefWidth="600.0" BorderPane.alignment="CENTER">
             <buttons>
-                <Button mnemonicParsing="false" onAction="#onVertexAdd" text="Add Vertex"/>
-                <Button mnemonicParsing="false" onAction="#onEdgeAdd" text="Add Edge"/>
-                <Button mnemonicParsing="false" onAction="#onReset" text="Reset"/>
-                <Button mnemonicParsing="false" onAction="#onPath" text="Path"/>
+                <Button mnemonicParsing="false" onAction="#onVertexAdd" text="Neuer Knoten" />
+                <Button mnemonicParsing="false" onAction="#onEdgeAdd" text="Neue Kante" />
+                <Button mnemonicParsing="false" onAction="#onReset" text="Zurücksetzen" />
+                <Button mnemonicParsing="false" onAction="#onPath" text="Pfad" />
             </buttons>
         </ButtonBar>
     </top>
