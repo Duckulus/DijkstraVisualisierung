@@ -9,10 +9,18 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Circle;
 
+/**
+ * Diese Klasse repräsentiert einen Graphenknoten in der Benutzeroberfläche
+ * mithilfe eines {@link Circle} auf einem {@link StackPane}
+ * Außerdem speichert sie eine Instanz der Datenklasse {@link Vertex} um die Verwaltung zu erleichtern
+ *
+ * @author Amin Haddou
+ */
 public class VertexPane extends StackPane {
 
     private Vertex vertex;
     private Circle dot;
+
     /**
      * Credit https://stackoverflow.com/questions/53366602/creating-directed-edges-javafx
      */
@@ -25,7 +33,6 @@ public class VertexPane extends StackPane {
         dot = new Circle();
         dot.setRadius(radius);
         dot.setStyle("-fx-fill:cyan;-fx-stroke-width:2px;-fx-stroke:black;");
-        toFront();
         Label txt = new Label(text);
         txt.setStyle("-fx-font-size:18px;-fx-font-weight:bold;");
         dotPane.getChildren().addAll(dot, txt);

@@ -1,11 +1,19 @@
 package de.amin.dijkstrafacharbeit.gui;
 
 import de.amin.dijkstrafacharbeit.data.Edge;
+import de.amin.dijkstrafacharbeit.data.Vertex;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 
+/**
+ * Diese Klasse repräsentiert eine Graphenkante in der Benutzeroberfläche
+ * mithilfe einer {@link Line}
+ * Außerdem speichert sie eine Instanz der Datenklasse {@link Edge} um die Verwaltung zu erleichtern
+ *
+ * @author Amin Haddou
+ */
 public class EdgeLine extends Line {
 
     private VertexPane from;
@@ -13,6 +21,9 @@ public class EdgeLine extends Line {
     private double weight;
     private Edge edge;
 
+    /**
+     * Credit https://stackoverflow.com/questions/53366602/creating-directed-edges-javafx
+     */
     public EdgeLine(VertexPane startDot, VertexPane endDot, Pane pane,Double weight) {
         this.from = startDot;
         this.to = endDot;

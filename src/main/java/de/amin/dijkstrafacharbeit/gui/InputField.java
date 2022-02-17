@@ -5,6 +5,12 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
 import javafx.scene.layout.HBox;
 
+/**
+ * Diese Klasse fasst ein {@link TextField} und ein {@link Label}
+ * zusammen
+ *
+ * @author Amin Haddou
+ */
 public class InputField extends HBox {
 
     private TextField textField;
@@ -21,10 +27,6 @@ public class InputField extends HBox {
         }));
         this.getChildren().addAll(inputLabel, textField);
         this.setSpacing(10);
-    }
-
-    public void setText(String text) {
-        textField.setText(text);
     }
 
     public String getText() {

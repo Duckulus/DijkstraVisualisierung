@@ -33,15 +33,6 @@ javafx {
     modules = ['javafx.controls', 'javafx.fxml']
 }
 
-dependencies {
-
-    testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
-}
-
-test {
-    useJUnitPlatform()
-}
 
 jlink {
     imageZip = project.file("${buildDir}/distributions/app-${javafx.platform.classifier}.zip")
