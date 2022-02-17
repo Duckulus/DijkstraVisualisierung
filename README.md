@@ -26,7 +26,11 @@ Daraufhin sollte sich das Programmfenster starten.
 Alternativ kann auch die [Vorkompilierte Version](DijkstraFacharbeit.jar)
 heruntergeladen und ausgeführt werden.
 
-###Weitere Anmerkungen
+### Weitere Anmerkungen
 Es wurden die Datenstrukturimplementationen der [Schulentwicklung NRW](https://www.schulentwicklung.nrw.de/lehrplaene/lehrplannavigator-s-ii/gymnasiale-oberstufe/informatik/hinweise-und-beispiele/hinweise-und-beispiele.html) benutzt
+
+### Vorschau
+![](assets/vorschau1.png)
+![](assets/vorschau2.png)
 
 
