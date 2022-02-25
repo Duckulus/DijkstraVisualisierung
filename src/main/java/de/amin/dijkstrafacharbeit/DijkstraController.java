@@ -138,7 +138,7 @@ public class DijkstraController {
 
 
     public void onReset(ActionEvent actionEvent) {
-        pane.getChildren().removeAll(pane.getChildren());
+        pane.getChildren().clear();
         vertices.clear();
         edges.clear();
     }
