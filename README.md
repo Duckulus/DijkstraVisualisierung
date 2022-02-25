@@ -33,4 +33,9 @@ Es wurden die Datenstrukturimplementationen der [Schulentwicklung NRW](https://w
 ![](assets/vorschau1.png)
 ![](assets/vorschau2.png)
 
+### Klassendokumentation
+Die HTML Javadocs können nach dem klonen durch das starten der Datei [documentation/index.html](documentation/index.html) 
+im lokalen Webbrowser aufgerufen werden. Sie umfassen sowohl meine Implementation als auch die Klassen
+der Schulentwicklung NRW, die genutzt wurden
+
 
